@@ -8,27 +8,22 @@ on:
     - cron: '0 * * * *' # Executa a cada hora
 
 jobs:
-  build-and-test:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Display Node.js version
-      run: node --version
-
-    - name: Display NPM version
-      run: npm --version
-
-    - name: List files in workspace
-      run: ls -la
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm test
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
 
   scheduled-task:
     runs-on: ubuntu-latest
