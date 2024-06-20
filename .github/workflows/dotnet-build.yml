@@ -8,26 +8,15 @@ on:
     - cron: '0 * * * *' # Executa a cada hora
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
-
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --no-restore
-
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run tests
+      run: npm test
 
   scheduled-task:
     runs-on: ubuntu-latest
@@ -39,5 +28,5 @@ jobs:
     - name: Run custom script
       run: |
         echo "Running scheduled task"
-        echo "Current time: $(date)"
-        echo "This script runs every hour"
+        echo "Hora atual: $(date)"
+        echo "Esse script é executado a cada hora"
