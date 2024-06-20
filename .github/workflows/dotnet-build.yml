@@ -15,10 +15,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
+    - name: Display Node.js version
+      run: node --version
+
+    - name: Display NPM version
+      run: npm --version
+
+    - name: List files in workspace
+      run: ls -la
 
     - name: Install dependencies
       run: npm install
